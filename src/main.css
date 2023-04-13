@@ -1,0 +1,65 @@
+body,
+html {
+    background-color: #121212;
+    color: white;
+    font-family: monospace;
+    font-size: 10pt;
+}
+
+hr {
+    border: 1px solid #202020;
+}
+
+.gridparent {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.left {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.right {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.textcenter {
+    text-align: center;
+}
+
+.wrapper {
+    padding:20px;
+}
+
+.inputwrapper {
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #202020;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    text-align-last: center;
+    background-color: #121212;
+    color: white;
+    width: 100%;
+}
+
+.btn {
+    background-color: #121212;
+    color: white;
+    padding: 20px;
+    border: 1px solid #202020;
+    cursor: pointer;
+}
+
+.bigbtn {
+    width: 100%;
+}
