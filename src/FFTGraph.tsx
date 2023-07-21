@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useTransition } from 'react'
 import * as Tone from 'tone'
 import FFTChart from './FFTChart';
 
@@ -14,6 +14,7 @@ const FFTGraph = ({ file }: FFTGraphProps) => {
     const [isPlaying, setIsPlaying] = React.useState(false);
     const [fft, setFFT] = React.useState<Tone.FFT | null>(null);
     const [fftData, setFFTData] = React.useState<Float32Array>(new Float32Array(fftSize));
+    const [isPending, startTransition] = useTransition();
     const reader = new FileReader();
     const audioContext = new AudioContext();
 
@@ -41,12 +42,14 @@ const FFTGraph = ({ file }: FFTGraphProps) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (isPlaying) {
-                setFFTData(fft!.getValue());
+            if (isPlaying && fft) {
+                startTransition(() => {
+                    setFFTData(fft!.getValue());
+                });
             }
         }, 1);
         return () => clearInterval(interval);
-    }, [isPlaying]);
+    }, [isPlaying, fft]);
 
     const play = () => {
         setIsPlaying(true);
@@ -79,7 +82,7 @@ const FFTGraph = ({ file }: FFTGraphProps) => {
                             <h5>Waiting for a file to be selected</h5>
                         )
                 }
-                <FFTChart data={fftData} />
+                <FFTChart data={fftData.slice(50,-50)} />
             </div>
         </div>
     )

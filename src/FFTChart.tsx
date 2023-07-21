@@ -3,11 +3,13 @@ import React, { useState } from 'react'
 import { fftSize } from './FFTGraph';
 import * as echarts from 'echarts/core';
 
+const lerp = (x: number, y: number, a:number,) => x * (1 - a) + y * a;
+
 const option = (data: number[]) => ({
     animation: false,
     title: {
         left: 'center',
-        text: 'Intensity over Samples (roughly)',
+        text: 'Intensity over frequency (linear scale)',
         textStyle: {
             color: 'white'
         }
@@ -15,7 +17,7 @@ const option = (data: number[]) => ({
     xAxis: {
         type: 'category',
         snap: false,
-        max: 500,
+        data: Array.from(data.map((_, i) => lerp(0,20000,i/(fftSize-100)))),
     },
     yAxis: {
         type: 'value',
@@ -66,4 +68,5 @@ const FFTChart = ({ data }: FFTChartProps) => {
     )
 }
 
-export default FFTChart
+export {lerp};
+export default FFTChart;
